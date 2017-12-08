@@ -7,6 +7,10 @@ public class Group {
         this.guests = new ArrayList<>();
     }
 
+    public ArrayList<Guest> getGuests() {
+        return guests;
+    }
+
     public void addGuestToGroup(Guest guest){
         this.guests.add(guest);
     }

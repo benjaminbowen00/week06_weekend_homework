@@ -14,4 +14,16 @@ public class Room {
     public int getCapacity(){
         return this.capacity;
     }
+
+    public int getNumberOfGuests(){
+        return this.guests.size();
+    }
+
+    public boolean roomIsEmpty(){
+        return this.getNumberOfGuests() == 0;
+    }
+
+    public void addGroupToRoom(Group group){
+        this.guests.addAll(group.getGuests());
+    }
 }
