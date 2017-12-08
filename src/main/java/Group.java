@@ -18,4 +18,16 @@ public class Group {
     public int getSize(){
         return this.guests.size();
     }
+
+    public double groupTotalMoney(){
+        double total = 0;
+        for (Guest guest : guests) {
+            total += guest.getMoney();
+        }
+        return total;
+    }
+
+    public boolean groupHasMoneyForRoom(Room room){
+        return this.groupTotalMoney() >= room.getPrice();
+    }
 }

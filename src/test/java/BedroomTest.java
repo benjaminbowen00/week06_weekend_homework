@@ -5,18 +5,25 @@ import static org.junit.Assert.assertEquals;
 
 public class BedroomTest {
     Group group1;
+    Group group2;
     Guest guest1;
     Guest guest2;
+    Guest guest3;
     Bedroom bedroom1;
 
 
     @Before
     public void before(){
         group1 = new Group();
-        guest1 = new Guest("Basil");
-        guest2 = new Guest("Cybil");
+        group2 = new Group();
+        guest1 = new Guest("Basil", 200);
+        guest2 = new Guest("Cybil", 100);
+        guest3 = new Guest("Manuel", 10);
         group1.addGuestToGroup(guest1);
         group1.addGuestToGroup(guest2);
+        group1.addGuestToGroup(guest3);
+        group2.addGuestToGroup(guest1);
+        group2.addGuestToGroup(guest2);
         bedroom1 = new Bedroom("Room 1", BedroomType.DOUBLE);
     }
 
@@ -24,7 +31,7 @@ public class BedroomTest {
     public void canAddGroups(){
         assertEquals(0, bedroom1.getNumberOfGuests());
         bedroom1.addGroupToRoom(group1);
-        assertEquals(2, bedroom1.getNumberOfGuests());
+        assertEquals(3, bedroom1.getNumberOfGuests());
     }
 
     @Test
@@ -32,6 +39,13 @@ public class BedroomTest {
         assertEquals(true, bedroom1.roomIsEmpty());
         bedroom1.addGroupToRoom(group1);
         assertEquals(false, bedroom1.roomIsEmpty());
+    }
+
+    @Test
+    public void roomLimitworks(){
+
+        assertEquals(false, bedroom1.groupFitsInRoom(group1));
+        assertEquals(true, bedroom1.groupFitsInRoom(group2));
     }
 
 

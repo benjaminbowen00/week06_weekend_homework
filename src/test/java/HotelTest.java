@@ -8,54 +8,99 @@ public class HotelTest {
     Hotel hotel1;
     Bedroom bedroom1;
     Bedroom bedroom2;
+    Bedroom bedroom3;
     Group group1;
     Group group2;
+    Group group3;
+    Group group4;
     Guest guest1;
     Guest guest2;
     Guest guest3;
+    Guest guest4;
+    Guest guest5;
 
     @Before
     public void before(){
         hotel1 = new Hotel("CodeClan Towers");
         bedroom1 = new Bedroom("Room 1", BedroomType.DOUBLE);
         bedroom2 = new Bedroom("Room 2", BedroomType.FAMILY);
+        bedroom3 = new Bedroom("Room 3", BedroomType.FAMILY);
+        hotel1.addRoom(bedroom1);
+        hotel1.addRoom(bedroom2);
+
         group1 = new Group();
         group2 = new Group();
-        guest1 = new Guest("Basil");
-        guest2 = new Guest("Cybil");
-        guest2 = new Guest("Manuel");
+        group3 = new Group();
+        group4 = new Group();
+        guest1 = new Guest("Basil", 200);
+        guest2 = new Guest("Cybil", 100);
+        guest3 = new Guest("Manuel", 10);
+        guest4 = new Guest("Polly", 25);
+        guest5 = new Guest("The Colonel", 1000);
         group1.addGuestToGroup(guest1);
         group1.addGuestToGroup(guest2);
         group1.addGuestToGroup(guest3);
         group2.addGuestToGroup(guest1);
         group2.addGuestToGroup(guest2);
-
+        group3.addGuestToGroup(guest3);
+        group3.addGuestToGroup(guest4);
+        group4.addGuestToGroup(guest5);
     }
 
-    @Test
-    public void hotelStartsNoRooms(){
-        assertEquals(0, hotel1.numberOfRooms());
-    }
+//    @Test
+//    public void hotelStartsNoRooms(){
+//        assertEquals(0, hotel1.numberOfRooms());
+//    }
 
     @Test
     public void canAddRoom(){
-        hotel1.addRoom(bedroom1);
-        assertEquals(1, hotel1.numberOfRooms());
+        assertEquals(2, hotel1.numberOfRooms());
     }
 
     @Test
     public void canCheckForRooms(){
-        hotel1.addRoom(bedroom1);
         assertEquals(true, hotel1.hasRoom(bedroom1));
-        assertEquals(false, hotel1.hasRoom(bedroom2));
+        assertEquals(false, hotel1.hasRoom(bedroom3));
     }
 
     @Test
-    public void roomLimitworks(){
-    hotel1.addRoom(bedroom1);
-    assertEquals(false, hotel1.groupFitsInRoom(group1, bedroom1));
-    assertEquals(true, hotel1.groupFitsInRoom(group2, bedroom1));
+    public void canCheckInGroup(){
+        hotel1.checkInGroup(group2, bedroom1);
+        assertEquals(2, hotel1.totalGuests());
     }
+
+    @Test
+    public void canCheckInMultipleGroups(){
+        hotel1.checkInGroup(group2, bedroom1);
+        hotel1.checkInGroup(group4, bedroom2);
+        assertEquals(3, hotel1.totalGuests());
+    }
+
+    @Test
+    public void cantCheckInGuestRoomNotInHotel(){
+        hotel1.checkInGroup(group2, bedroom3);
+        assertEquals(0, hotel1.totalGuests());
+    }
+
+    @Test
+    public void cantCheckInGuestTooManyGuestsForRoom(){
+        hotel1.checkInGroup(group1, bedroom1);
+        assertEquals(0, hotel1.totalGuests());
+    }
+
+    @Test
+    public void cantCheckInGuestTooExpensive(){
+        hotel1.checkInGroup(group3, bedroom1);
+        assertEquals(0, hotel1.totalGuests());
+    }
+
+    @Test
+    public void cantCheckInGuestRoomOccupied(){
+        hotel1.checkInGroup(group4, bedroom2);
+        hotel1.checkInGroup(group2, bedroom2);
+        assertEquals(1, hotel1.totalGuests());
+    }
+
 
 
 }

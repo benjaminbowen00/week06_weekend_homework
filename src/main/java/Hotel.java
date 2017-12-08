@@ -21,17 +21,22 @@ public class Hotel {
         return rooms.contains(room);
     }
 
-    public boolean groupFitsInRoom(Group group, Room room){
-        return group.getSize() <= room.getCapacity();
+    public int totalGuests(){
+        int total = 0;
+        for (Room room : rooms){
+            total += room.getNumberOfGuests();
+        }
+        return total;
+    }
+
+//
+
+    public void checkInGroup(Group group, Room room) {
+        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room) && room.roomIsEmpty()) {
+            room.addGroupToRoom(group);
+        }
     }
 
 
-
-
-//    public void checkInGroupBedroom(Group group, Bedroom bedroom){
-//        if (rooms.contains(bedroom) && group.getSize() <= bedroom.getCapacity()) {
-//
-//        }
-//    }
 
 }
