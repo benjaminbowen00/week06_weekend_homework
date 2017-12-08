@@ -21,6 +21,9 @@ public class Room {
         return this.price;
     }
 
+    public ArrayList<Guest> getGuests() {
+        return guests;
+    }
 
     public int getNumberOfGuests(){
         return this.guests.size();
@@ -34,7 +37,17 @@ public class Room {
         this.guests.addAll(group.getGuests());
     }
 
+    public void removeGroupFromRoom(){
+        this.guests.clear();
+    }
+
     public boolean groupFitsInRoom(Group group){
         return group.getSize() <= this.getCapacity();
+    }
+    public boolean isGroupInRoom(Group group){
+        return group.getGuests().equals(this.getGuests());
+//        return group.getGuests() == this.getGuests();
+//        this didn't pass the same test when using ==
+
     }
 }

@@ -35,6 +35,14 @@ public class BedroomTest {
     }
 
     @Test
+    public void canRemoveGroups(){
+        bedroom1.addGroupToRoom(group1);
+        assertEquals(3, bedroom1.getNumberOfGuests());
+        bedroom1.removeGroupFromRoom();
+        assertEquals(0, bedroom1.getNumberOfGuests());
+    }
+
+    @Test
     public void canCheckEmpty(){
         assertEquals(true, bedroom1.roomIsEmpty());
         bedroom1.addGroupToRoom(group1);
@@ -43,9 +51,15 @@ public class BedroomTest {
 
     @Test
     public void roomLimitworks(){
-
         assertEquals(false, bedroom1.groupFitsInRoom(group1));
         assertEquals(true, bedroom1.groupFitsInRoom(group2));
+    }
+
+    @Test
+    public void isGroupInRoom(){
+        assertEquals(false, bedroom1.isGroupInRoom(group1));
+        bedroom1.addGroupToRoom(group1);
+        assertEquals(true, bedroom1.isGroupInRoom(group1));
     }
 
 

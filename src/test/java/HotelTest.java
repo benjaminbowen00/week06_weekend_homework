@@ -101,6 +101,22 @@ public class HotelTest {
         assertEquals(1, hotel1.totalGuests());
     }
 
+    @Test
+    public void canFindRoomOfGroup() {
+        hotel1.checkInGroup(group2, bedroom1);
+        hotel1.checkInGroup(group4, bedroom2);
+        assertEquals(bedroom1, group2.findRoom(hotel1));
+        assertEquals(bedroom2, group4.findRoom(hotel1));
+        assertEquals(null, group3.findRoom(hotel1));
+    }
 
+    @Test
+    public void canCheckoutGroup(){
+        hotel1.checkInGroup(group2, bedroom1);
+        hotel1.checkInGroup(group4, bedroom2);
+        hotel1.checkOutGroup(group4);
+        assertEquals(2, hotel1.totalGuests());
+
+    }
 
 }

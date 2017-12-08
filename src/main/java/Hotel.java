@@ -13,6 +13,10 @@ public class Hotel {
         return rooms.size();
     }
 
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
     public void addRoom(Room room){
         rooms.add(room);
     }
@@ -35,6 +39,10 @@ public class Hotel {
         if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room) && room.roomIsEmpty()) {
             room.addGroupToRoom(group);
         }
+    }
+
+    public void checkOutGroup(Group group){
+        group.findRoom(this).removeGroupFromRoom();
     }
 
 

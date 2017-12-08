@@ -30,4 +30,14 @@ public class Group {
     public boolean groupHasMoneyForRoom(Room room){
         return this.groupTotalMoney() >= room.getPrice();
     }
+
+    public Room findRoom(Hotel hotel){
+        for (Room room : hotel.getRooms()){
+            if (room.isGroupInRoom(this)){
+                return room;
+            }
+        }
+        return null;
+    }
+
 }
