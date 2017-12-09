@@ -13,6 +13,7 @@ public class GroupTest {
     @Before
     public void before(){
         group1 = new Group();
+        group2 = new Group();
         guest1 = new Guest("Basil", 200);
         guest2 = new Guest("Cybil", 100);
         guest3 = new Guest("Manuel", 10);
@@ -25,11 +26,11 @@ public class GroupTest {
 
     @Test
     public void canAddGuests(){
-        assertEquals(2, group1.getSize());
+        assertEquals(3, group1.getSize());
     }
 
     @Test
     public void canGetTotalMoney(){
-        assertEquals(300, group1.groupTotalMoney(), 0.001);
+        assertEquals(310, group1.groupTotalMoney(), 0.001);
     }
 }

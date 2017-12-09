@@ -1,13 +1,13 @@
-public enum BedroomType {
-    SINGLE(50, 1, true),
-    DOUBLE(80, 2, true),
-    FAMILY(90, 4, true);
+public enum FunctionRoomType {
+    PARTY(5000, 100, true),
+    CONFERENCE(1000, 100, true),
+    MEETING(100, 10, true);
 
     private final double price;
     private final int capacity;
     private final boolean exclusive;
 
-    private BedroomType(double price, int capacity, boolean exclusive) {
+    private FunctionRoomType(double price, int capacity, boolean exclusive) {
         this.price = price;
         this.capacity = capacity;
         this.exclusive = exclusive;

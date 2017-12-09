@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Hotel {
-    String name;
-    ArrayList<Room> rooms;
+    private String name;
+    private ArrayList<Room> rooms;
 
     public Hotel(String name){
         this.name = name;
@@ -33,18 +33,40 @@ public class Hotel {
         return total;
     }
 
-//
 
     public void checkInGroup(Group group, Room room) {
-        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room) && room.roomIsEmpty()) {
+        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room)) {
             room.addGroupToRoom(group);
         }
     }
 
     public void checkOutGroup(Group group){
-        group.findRoom(this).removeGroupFromRoom();
+        group.findRoom(this).removeGroupFromRoom(group);
     }
 
+    public ArrayList<Guest> getGuests(Room room){
+        if (this.hasRoom(room)){
+        return room.getGuests();}
+        else return null;
+    }
 
+    public Room getRoomOfGuest(Guest guest){
+        for(Room room : this.rooms){
+            if( room.getGuests().contains(guest)){
+                return room;
+            }
+        }
+        return null;
+    }
 
+    public ArrayList<Room> getEmptyRooms(){
+        ArrayList<Room> emptyRooms = new ArrayList<>();
+        for(Room room : this.rooms){
+            if(room.roomIsEmpty()){
+                emptyRooms.add(room);
+            }
+
+        }
+        return emptyRooms;
+    }
 }

@@ -38,7 +38,7 @@ public class BedroomTest {
     public void canRemoveGroups(){
         bedroom1.addGroupToRoom(group1);
         assertEquals(3, bedroom1.getNumberOfGuests());
-        bedroom1.removeGroupFromRoom();
+        bedroom1.removeGroupFromRoom(group1);
         assertEquals(0, bedroom1.getNumberOfGuests());
     }
 

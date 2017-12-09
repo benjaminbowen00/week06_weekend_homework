@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class HotelTest {
@@ -9,6 +11,8 @@ public class HotelTest {
     Bedroom bedroom1;
     Bedroom bedroom2;
     Bedroom bedroom3;
+    DiningRoom diningRoom1;
+    FunctionRoom functionRoom1;
     Group group1;
     Group group2;
     Group group3;
@@ -18,6 +22,9 @@ public class HotelTest {
     Guest guest3;
     Guest guest4;
     Guest guest5;
+    ArrayList<Guest> restaurantGuests;
+    ArrayList<Room> unoccupiedRooms;
+
 
     @Before
     public void before(){
@@ -25,8 +32,12 @@ public class HotelTest {
         bedroom1 = new Bedroom("Room 1", BedroomType.DOUBLE);
         bedroom2 = new Bedroom("Room 2", BedroomType.FAMILY);
         bedroom3 = new Bedroom("Room 3", BedroomType.FAMILY);
+        diningRoom1 = new DiningRoom("Restaurant", DiningRoomType.DINNER);
+        functionRoom1 = new FunctionRoom("Wedding Room", FunctionRoomType.PARTY);
         hotel1.addRoom(bedroom1);
         hotel1.addRoom(bedroom2);
+        hotel1.addRoom(diningRoom1);
+        hotel1.addRoom(functionRoom1);
 
         group1 = new Group();
         group2 = new Group();
@@ -45,6 +56,9 @@ public class HotelTest {
         group3.addGuestToGroup(guest3);
         group3.addGuestToGroup(guest4);
         group4.addGuestToGroup(guest5);
+
+        restaurantGuests = new ArrayList<>();
+        unoccupiedRooms = new ArrayList<>();
     }
 
 //    @Test
@@ -54,7 +68,7 @@ public class HotelTest {
 
     @Test
     public void canAddRoom(){
-        assertEquals(2, hotel1.numberOfRooms());
+        assertEquals(4, hotel1.numberOfRooms());
     }
 
     @Test
@@ -118,5 +132,75 @@ public class HotelTest {
         assertEquals(2, hotel1.totalGuests());
 
     }
+
+    @Test
+    public void canCheckMultipleGroupsToDiningRoom(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        hotel1.checkInGroup(group2, diningRoom1);
+        hotel1.checkInGroup(group4, diningRoom1);
+        assertEquals(6, diningRoom1.getNumberOfGuests());
+    }
+
+    @Test
+    public void canCheckoutSingleGroupFromNonExclusiveRoom(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        hotel1.checkInGroup(group2, diningRoom1);
+        hotel1.checkInGroup(group4, diningRoom1);
+        hotel1.checkOutGroup(group1);
+        assertEquals(3, diningRoom1.getNumberOfGuests());
+    }
+
+    @Test
+    public void canGetGuestsInRoom(){
+        hotel1.checkInGroup(group2, bedroom1);
+        assertEquals(group2.getGuests(), hotel1.getGuests(bedroom1));
+    }
+
+    @Test
+    public void canGetGuestsInNonExclusiveRoom(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        hotel1.checkInGroup(group4, diningRoom1);
+        restaurantGuests.add(guest1);
+        restaurantGuests.add(guest2);
+        restaurantGuests.add(guest3);
+        restaurantGuests.add(guest5);
+        assertEquals(restaurantGuests, hotel1.getGuests(diningRoom1));
+
+    }
+
+    @Test
+    public void canGetRoomOfGuest(){
+        hotel1.checkInGroup(group2, bedroom1);
+        assertEquals(bedroom1, hotel1.getRoomOfGuest(guest1));
+    }
+
+    @Test
+    public void cantGetRoomOfGuestIfCouldntCheckIn(){
+        hotel1.checkInGroup(group1, bedroom1);
+        assertEquals(null, hotel1.getRoomOfGuest(guest1));
+    }
+
+    @Test
+    public void canGetRoomOfGuestInNonExclusiveRoom(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        hotel1.checkInGroup(group4, diningRoom1);
+        assertEquals(diningRoom1, hotel1.getRoomOfGuest(guest2));
+    }
+
+    @Test
+    public void canGetEmptyRoomsNoneOccupied(){
+        assertEquals(4, hotel1.getEmptyRooms().size());
+    }
+
+    @Test
+    public void canGetEmptyRoomsSomeOccupied(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        hotel1.checkInGroup(group4, bedroom1);
+        unoccupiedRooms.add(bedroom2);
+        unoccupiedRooms.add(functionRoom1);
+        assertEquals(2, hotel1.getEmptyRooms().size());
+        assertEquals(unoccupiedRooms, hotel1.getEmptyRooms());
+    }
+
 
 }
