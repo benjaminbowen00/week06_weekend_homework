@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class Hotel {
     private String name;
     private ArrayList<Room> rooms;
+    private double money;
 
     public Hotel(String name){
         this.name = name;
         this.rooms = new ArrayList<>();
+        this.money = 0;
     }
 
     public int numberOfRooms(){
@@ -37,6 +39,7 @@ public class Hotel {
     public void checkInGroup(Group group, Room room) {
         if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room)) {
             group.deductMoneyFromGroup(room.getPrice());
+            this.addMoneyToHotel(room.getPrice());
             room.addGroupToRoom(group);
         }
     }
@@ -70,4 +73,14 @@ public class Hotel {
         }
         return emptyRooms;
     }
+
+    public double getMoney() {
+        return this.money;
+    }
+
+    public void addMoneyToHotel(double amount){
+        this.money += amount;
+    }
+
+    
 }

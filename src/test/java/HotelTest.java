@@ -215,6 +215,12 @@ public class HotelTest {
         assertEquals(200, guest1.getMoney(), 0.01);
     }
 
+    @Test
+    public void canAddMoneyToHotel() {
+        hotel1.checkInGroup(group2, bedroom1);
+        hotel1.checkInGroup(group4, bedroom2);
+        assertEquals(170, hotel1.getMoney(), 0.01);
+    }
 
 
 
