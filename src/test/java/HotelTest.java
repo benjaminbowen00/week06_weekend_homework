@@ -222,6 +222,19 @@ public class HotelTest {
         assertEquals(170, hotel1.getMoney(), 0.01);
     }
 
+    @Test
+    public void canCheckInForMultipleDays() {
+        hotel1.checkInGroup(group2, bedroom1, 2);
+        hotel1.checkInGroup(group4, bedroom2,3);
+        assertEquals(430, hotel1.getMoney(), 0.01);
+        assertEquals(3, hotel1.totalGuests());
+    }
+
+    @Test
+    public void cantCheckInForMultipleDaysNotEnoughMoney(){
+        hotel1.checkInGroup(group2, bedroom1, 10);
+        assertEquals(0, hotel1.getMoney(), 0.01);
+    }
 
 
 }

@@ -27,8 +27,14 @@ public class Group {
         return total;
     }
 
+
+    public boolean groupHasMoneyForRoom(Room room, int days){
+        return this.groupTotalMoney() >= room.getPrice() * days;
+    }
+
+//    Method overloading
     public boolean groupHasMoneyForRoom(Room room){
-        return this.groupTotalMoney() >= room.getPrice();
+        return groupHasMoneyForRoom(room, 1);
     }
 
     public Room findRoom(Hotel hotel){

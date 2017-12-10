@@ -35,14 +35,14 @@ public class Hotel {
         return total;
     }
 
-
-    public void checkInGroup(Group group, Room room) {
-        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room)) {
-            group.deductMoneyFromGroup(room.getPrice());
-            this.addMoneyToHotel(room.getPrice());
-            room.addGroupToRoom(group);
-        }
-    }
+//  Refactored below for multiple days
+//    public void checkInGroup(Group group, Room room) {
+//        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room)) {
+//            group.deductMoneyFromGroup(room.getPrice());
+//            this.addMoneyToHotel(room.getPrice());
+//            room.addGroupToRoom(group);
+//        }
+//    }
 
     public void checkOutGroup(Group group){
         group.findRoom(this).removeGroupFromRoom(group);
@@ -82,5 +82,18 @@ public class Hotel {
         this.money += amount;
     }
 
-    
+    public void checkInGroup(Group group, Room room, int days) {
+        if (!room.isExclusive()){days = 1;}
+        if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room, days)) {
+            group.deductMoneyFromGroup(days * room.getPrice());
+            this.addMoneyToHotel(days * room.getPrice());
+            room.addGroupToRoom(group);
+        }
+    }
+//    method overloading
+    public void checkInGroup(Group group, Room room) {
+        checkInGroup(group, room, 1);
+    }
+
+
 }
