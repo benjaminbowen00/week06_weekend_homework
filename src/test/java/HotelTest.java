@@ -202,5 +202,20 @@ public class HotelTest {
         assertEquals(unoccupiedRooms, hotel1.getEmptyRooms());
     }
 
+    @Test
+    public void canDeductWhenCheckIn() {
+        hotel1.checkInGroup(group2, bedroom1);
+        assertEquals(146.67, guest1.getMoney(), 0.01);
+        assertEquals(73.33, guest2.getMoney(), 0.01);
+    }
+
+    @Test
+    public void noDeductFromNonExclusiveRoom(){
+        hotel1.checkInGroup(group1, diningRoom1);
+        assertEquals(200, guest1.getMoney(), 0.01);
+    }
+
+
+
 
 }

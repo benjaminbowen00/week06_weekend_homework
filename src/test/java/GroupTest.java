@@ -33,4 +33,12 @@ public class GroupTest {
     public void canGetTotalMoney(){
         assertEquals(310, group1.groupTotalMoney(), 0.001);
     }
+
+    @Test
+    public void canMakeGroupPayment(){
+        group2.deductMoneyFromGroup(150);
+        assertEquals(100, guest1.getMoney(), 0.01);
+        assertEquals(50, guest2.getMoney(), 0.01);
+    }
+
 }

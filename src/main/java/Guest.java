@@ -10,4 +10,10 @@ public class Guest {
     public double getMoney() {
         return money;
     }
+
+
+
+    public void deductMoney(double amount){
+        this.money -= amount;
+    }
 }

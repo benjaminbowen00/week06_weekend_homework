@@ -36,6 +36,7 @@ public class Hotel {
 
     public void checkInGroup(Group group, Room room) {
         if (this.hasRoom(room) && room.groupFitsInRoom(group) &&  group.groupHasMoneyForRoom(room)) {
+            group.deductMoneyFromGroup(room.getPrice());
             room.addGroupToRoom(group);
         }
     }

@@ -40,4 +40,12 @@ public class Group {
         return null;
     }
 
+    public void deductMoneyFromGroup(double amount){
+        double total = this.groupTotalMoney();
+        for (Guest guest : this.guests){
+            double individualPayment = (amount/total)*guest.getMoney();
+            guest.deductMoney(individualPayment);
+        }
+    }
+
 }
