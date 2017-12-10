@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class Room {
-    String name;
-    ArrayList<Guest> guests;
-    int capacity;
-    double price;
-    boolean exclusive;
+    private String name;
+    private ArrayList<Guest> guests;
+    private int capacity;
+    private double price;
+    private boolean exclusive;
 
     public Room(String name, int capacity, double price, boolean exclusive ){
         this.name = name;

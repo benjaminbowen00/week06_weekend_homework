@@ -1,6 +1,6 @@
 public class Guest {
-    String name;
-    double money;
+    private String name;
+    private double money;
 
     public Guest(String name, double money){
         this.name = name;
